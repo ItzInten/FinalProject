@@ -5,38 +5,47 @@
              Title="ConverterPage">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-
-            <!-- Title -->
             <Label Text="Currency Converter"
                    FontSize="24"
                    HorizontalOptions="Center"
                    Margin="0,0,0,20" />
 
-            <!-- From Currency -->
+            <Label Text="Current rate compared to USD"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,20" />
+
+            <ListView x:Name="RatesListView"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="LightGray"
+                HeightRequest="200">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Key}" 
+                        Detail="{Binding Value, StringFormat='Rate: {0:F2}'}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <Label Text="Currency to Convert From:" />
             <Entry x:Name="FromCurrencyEntry"
-                   Placeholder="Enter currency code (e.g., USD)" />
+            Placeholder="Enter currency code (e.g., USD)" />
 
-            <!-- Amount -->
+            <Label Text="Currency to Convert To:" />
+            <Entry x:Name="ToCurrencyEntry"
+            Placeholder="Enter currency code (e.g., AED)" />
+
             <Label Text="Amount:" />
             <Entry x:Name="AmountEntry"
                    Placeholder="Enter amount (e.g., 100)"
                    Keyboard="Numeric" />
 
-            <!-- To Currency Picker -->
-            <Label Text="Convert To Currency:" />
-            <Picker x:Name="ToCurrencyPicker"
-                    Title="Select currency" />
+            <Button Text="Show Result"
+                Clicked="OnShowResultClicked"
+                HorizontalOptions="Fill" />
 
-
-            <!-- Result Label -->
-            <Label x:Name="ResultLabel"
-                   Text="Converted amount will appear here."
-                   FontSize="18"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,20,0,0" />
-
+            <Label x:Name="ConversionResultLabel" Text="Converted Amount: " FontSize="20" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
