@@ -47,6 +47,4 @@ namespace FinalProject.Models
     {
         public Data data { get; set; }
     }
-
-
 }

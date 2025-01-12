@@ -1,13 +1,14 @@
 using FinalProject.Services;
 namespace FinalProject;
 
-public partial class ConverterPage : ContentPage
+public partial class MainPageOfTheProject : TabbedPage
 {
     private Dictionary<string, double> CurrencyRates = new Dictionary<string, double>();
-    public ConverterPage()
-	{
-		InitializeComponent();
-	}
+    
+    public MainPageOfTheProject()
+    {
+        InitializeComponent();
+    }
 
     protected async override void OnAppearing()
     {

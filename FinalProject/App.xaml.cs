@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new ConverterPage();
+            MainPage = new MainPageOfTheProject();
         }
     }
 }
