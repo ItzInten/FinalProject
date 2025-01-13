@@ -50,9 +50,16 @@
         </VerticalStackLayout>
     </ScrollView>
     </ContentPage>
+    
     <ContentPage Title="Weather">
         <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Current Weather"
+            <Label x:Name="TimeLabel" 
+            x:FieldModifier="public"
+            Text="Hello World!"
+            FontSize="24"
+            HorizontalOptions="Center"
+            Margin="0,0,0,20" />
+            <Label Text="Something2"
             FontSize="24"
             HorizontalOptions="Center"
             Margin="0,0,0,20" />
