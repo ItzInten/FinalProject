@@ -1,4 +1,4 @@
-﻿using FinalProject.Services;
+using FinalProject.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    class WeatherPage : ContentPage
+    public partial class WeatherPage : ContentPage
     {
         private double latitude;
         private double longitude;
-        private MainPageOfTheProject mainPage;  
-        public WeatherPage(MainPageOfTheProject page) 
+        public WeatherPage()
         {
-            mainPage = page;
+            InitializeComponent();
         }
         public async Task GetLocation()
         {
@@ -28,7 +27,8 @@ namespace FinalProject
             base.OnAppearing();
             await GetLocation();
             var result = await WeatherAPIService.GetWeather(latitude, longitude);
-            mainPage.TimeLabel.Text = "Working";
+            //weatherpage.TimeLabel.Text = "Working";
+            TimeLabel.Text = latitude.ToString();
         }
     }
 }

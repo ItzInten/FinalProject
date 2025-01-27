@@ -2,8 +2,9 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinalProject.MainPageOfTheProject"
+             xmlns:local="clr-namespace:FinalProject"
              Title="MainPageOfTheProject">
-    <ContentPage Title="Exchanger">
+    <ContentPage Title="Exchange">
         <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
             <Label Text="Exchanger"
@@ -50,22 +51,12 @@
         </VerticalStackLayout>
     </ScrollView>
     </ContentPage>
-    
-    <ContentPage Title="Weather">
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label x:Name="TimeLabel" 
-            x:FieldModifier="public"
-            Text="Hello World!"
-            FontSize="24"
-            HorizontalOptions="Center"
-            Margin="0,0,0,20" />
-            <Label Text="Something2"
-            FontSize="24"
-            HorizontalOptions="Center"
-            Margin="0,0,0,20" />
-        </VerticalStackLayout>
+
+    <local:WeatherPage Title="Weather" />
+    <ContentPage Title="Maps">
+
     </ContentPage>
-    <ContentPage Title="Words">
+    <ContentPage Title="Translate">
 
     </ContentPage>
 </TabbedPage>
