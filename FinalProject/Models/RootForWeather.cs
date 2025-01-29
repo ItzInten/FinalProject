@@ -78,6 +78,4 @@ namespace FinalProject.Models
         public DailyUnits daily_units { get; set; }
         public Daily daily { get; set; }
     }
-
-
 }

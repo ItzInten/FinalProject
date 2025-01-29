@@ -3,16 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinalProject.WeatherPage"
              Title="WeatherPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="MAUIIIIIIIII!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label x:Name="TimeLabel" 
-            x:FieldModifier="public"
-            Text="Hello World!"
-            FontSize="24"
-            HorizontalOptions="Center"
-            Margin="0,0,0,20" />
-    </VerticalStackLayout>
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="CityNameLabel"
+               FontSize="30"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Grid.Row="0"/>
+
+        <StackLayout Grid.Row="1" Padding="10" Spacing="5">
+            <Label x:Name="TemperatureLabel"
+                   Text="--°C"
+                   FontSize="50"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+            <Label x:Name="WeatherDescriptionLabel"
+                   Text="Weather Description"
+                   FontSize="20"
+                   HorizontalOptions="Center"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Humidity: " FontSize="16"/>
+                <Label x:Name="HumidityLabel" Text="--%" FontSize="16"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Precipitation: " FontSize="16"/>
+                <Label x:Name="PrecipitationLabel" Text="--mm" FontSize="16"/>
+            </StackLayout>
+        </StackLayout>
+
+        <CollectionView x:Name="HourlyCollectionView"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" 
+                        ItemsLayout="HorizontalList"
+                        Grid.Row="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical" Padding="10" HorizontalOptions="Center">
+                        <Label Text="{Binding Time}" FontSize="14" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Temperature, StringFormat='{0}°C'}" FontSize="14" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Humidity}" FontSize="14" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Precipitation}" FontSize="14" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>
