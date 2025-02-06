@@ -53,9 +53,9 @@
     </ContentPage>
 
     <local:WeatherPage Title="Weather" />
-    <ContentPage Title="Maps">
 
-    </ContentPage>
+    <local:MapPage Title="Map" />
+
     <ContentPage Title="Translate">
 
     </ContentPage>
