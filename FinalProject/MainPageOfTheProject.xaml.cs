@@ -8,6 +8,7 @@ public partial class MainPageOfTheProject : TabbedPage
     public MainPageOfTheProject()
     {
         InitializeComponent();
+        Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false);
     }
 
     protected async override void OnAppearing()

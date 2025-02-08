@@ -5,13 +5,23 @@
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              x:Class="FinalProject.MapPage"
              Title="MapPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Grid>
-            <maps:Map x:Name="map" />
-        </Grid>
-    </VerticalStackLayout>
+    <Grid>
+        <SearchBar x:Name="SearchBarLocation"
+               Placeholder="Enter location..."
+               SearchCommand="{Binding SearchCommand}"
+               SearchCommandParameter="{Binding Text, Source={x:Reference SearchBarLocation}}"
+               BackgroundColor="White"
+               Margin="10"
+               Grid.Row="0"/>
+
+        <maps:Map x:Name="MyMap"
+             Grid.Row="1"
+             VerticalOptions="FillAndExpand"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+    </Grid>
+
 </ContentPage>
