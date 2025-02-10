@@ -55,8 +55,6 @@
     <local:WeatherPage Title="Weather" />
 
     <local:MapPage Title="Map" />
-
-    <ContentPage Title="Translate">
-
-    </ContentPage>
+    
+    <local:TranslatorPage Title="Translate"/>
 </TabbedPage>
