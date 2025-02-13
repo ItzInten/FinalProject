@@ -77,4 +77,13 @@ public partial class TranslatorPage : ContentPage
         }
     }
 
+    private async void SpeakText(object sender, EventArgs e)
+    {
+        string textToSpeak = lblTranslation.Text;
+        if (!string.IsNullOrWhiteSpace(textToSpeak))
+        {
+            await TextToSpeech.Default.SpeakAsync(textToSpeak);
+        }
+    }
+
 }

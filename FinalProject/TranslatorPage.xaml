@@ -12,5 +12,11 @@
 
         <Label x:Name="lblTranslation" FontSize="20" TextColor="Blue" Text="Translation will appear here." 
            Padding="10" BackgroundColor="LightGray" HorizontalTextAlignment="Center"/>
+
+        <Button Text="🔊 Speak"
+        Clicked="SpeakText"
+        FontSize="24"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
