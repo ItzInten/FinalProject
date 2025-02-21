@@ -5,51 +5,45 @@
              xmlns:local="clr-namespace:FinalProject"
              Title="MainPageOfTheProject">
     <ContentPage Title="Exchange">
-        <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Exchanger"
-                   FontSize="24"
-                   HorizontalOptions="Center"
-                   Margin="0,0,0,20" />
+        <ContentPage.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#A1C4FD" Offset="0.1"/>
+                <GradientStop Color="#C2E9FB" Offset="3.0"/>
+            </LinearGradientBrush>
+        </ContentPage.Background>
+        <VerticalStackLayout>
+            <Label Text="Currency Converter"
+               FontSize="24"
+               HorizontalOptions="Center"
+               VerticalOptions="Start" 
+               Margin="0,50,0,100" />
+            <ScrollView>
+            <Frame CornerRadius="15" 
+                    Padding="15" 
+                    BackgroundColor="White"
+                    HasShadow="True"
+                    WidthRequest="350"
+                    HeightRequest="260">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*, Auto, *">
+                        <Picker x:Name="FromCurrencyPicker" Title="From" WidthRequest="120"/>
+                        <Button Text="⇄" Clicked="OnSwapCurrencies" Grid.Column="1"/>
+                        <Picker x:Name="ToCurrencyPicker" Title="To" Grid.Column="2" WidthRequest="120"/>
+                    </Grid>
 
-            <Label Text="Current rate compared to USD"
-                    FontSize="20"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,20" />
+                    <Entry x:Name="AmountEntry"
+               Placeholder="Enter amount"
+               Keyboard="Numeric"
+               HorizontalOptions="FillAndExpand"/>
 
-            <ListView x:Name="RatesListView"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand"
-                BackgroundColor="LightGray"
-                HeightRequest="200">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Key}" 
-                        Detail="{Binding Value, StringFormat='Rate: {0:F2}'}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    <Button Text="Convert" Clicked="OnShowResultClicked"/>
 
-            <Label Text="Currency to Convert From:" />
-            <Entry x:Name="FromCurrencyEntry"
-            Placeholder="Enter currency code (e.g., USD)" />
+                    <Label x:Name="ResultLabel" Text="Result: " FontSize="20" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
 
-            <Label Text="Currency to Convert To:" />
-            <Entry x:Name="ToCurrencyEntry"
-            Placeholder="Enter currency code (e.g., AED)" />
-
-            <Label Text="Amount:" />
-            <Entry x:Name="AmountEntry"
-                   Placeholder="Enter amount (e.g., 100)"
-                   Keyboard="Numeric" />
-
-            <Button Text="Show Result"
-                Clicked="OnShowResultClicked"
-                HorizontalOptions="Fill" />
-
-            <Label x:Name="ConversionResultLabel" Text="Converted Amount: " FontSize="20" />
+        </ScrollView>
         </VerticalStackLayout>
-    </ScrollView>
     </ContentPage>
 
     <local:WeatherPage Title="Weather" />

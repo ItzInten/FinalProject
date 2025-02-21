@@ -55,7 +55,9 @@ public partial class MainPageOfTheProject : TabbedPage
                 };
 
                 // Bind the list to the ListView
-                RatesListView.ItemsSource = ratesList;
+                //RatesListView.ItemsSource = ratesList;
+                FromCurrencyPicker.ItemsSource = ratesList.Select(item => item.Key).ToList();
+                ToCurrencyPicker.ItemsSource = ratesList.Select(item => item.Key).ToList();
                 CurrencyRates = ratesList.ToDictionary(r => r.Key, r => r.Value);
             }
             else
@@ -74,8 +76,8 @@ public partial class MainPageOfTheProject : TabbedPage
         try
         {
             // Get the user input
-            string fromCurrency = FromCurrencyEntry.Text?.ToUpper();  // Currency code to convert from
-            string toCurrency = ToCurrencyEntry.Text?.ToUpper();      // Currency code to convert to
+            string fromCurrency = FromCurrencyPicker.SelectedItem?.ToString();  // Currency code to convert from
+            string toCurrency = ToCurrencyPicker.SelectedItem?.ToString();   // Currency code to convert to
             double amount = Convert.ToDouble(AmountEntry.Text);       // Amount to convert
 
             if (string.IsNullOrEmpty(fromCurrency) || string.IsNullOrEmpty(toCurrency))
@@ -98,12 +100,23 @@ public partial class MainPageOfTheProject : TabbedPage
             double convertedAmount = (amount / fromRate) * toRate;
 
             // Display the result
-            ConversionResultLabel.Text = $"Converted Amount: {convertedAmount:F2} {toCurrency}";
+            ResultLabel.Text = $"Converted Amount: {convertedAmount:F2} {toCurrency}";
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
+    }
+
+    private void OnSwapCurrencies(object sender, EventArgs e)
+    {
+        // Get the selected values from both pickers
+        var fromCurrency = FromCurrencyPicker.SelectedItem;
+        var toCurrency = ToCurrencyPicker.SelectedItem;
+
+        // Swap the values
+        FromCurrencyPicker.SelectedItem = toCurrency;
+        ToCurrencyPicker.SelectedItem = fromCurrency;
     }
 
 }
