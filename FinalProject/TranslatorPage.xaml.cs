@@ -3,6 +3,7 @@ using FinalProject.Services;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text;
+using CommunityToolkit.Maui.Core.Platform;
 
 namespace FinalProject;
 
@@ -52,29 +53,36 @@ public partial class TranslatorPage : ContentPage
     {
         InitializeComponent();
         languagePicker.ItemsSource = languageMap.Keys.ToList();
-        languagePicker.SelectedIndex = 0;
     }
 
     private async void OnTranslateClicked(object sender, EventArgs e)
     {
-        string text = txtInput.Text;
-        string targetLanguage = languagePicker.SelectedItem.ToString();
-        string languageForRequest = languageMap[targetLanguage];
-        if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(languageForRequest))
+        try
         {
-            lblTranslation.Text = "Please enter text and select a language.";
-            return;
-        }
+            string text = txtInput.Text;
+            string targetLanguage = languagePicker.SelectedItem.ToString();
+            string languageForRequest = languageMap[targetLanguage];
+            if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(languageForRequest))
+            {
+                lblTranslation.Text = "Please enter text and select a language.";
+                return;
+            }
 
-        string translatedText = await TranslatorAPIService.TranslateTextAsync(text, languageForRequest);
-        if (translatedText != null)
-        {
-            lblTranslation.Text = translatedText;
+            string translatedText = await TranslatorAPIService.TranslateTextAsync(text, languageForRequest);
+            if (translatedText != null)
+            {
+                lblTranslation.Text = translatedText;
+            }
+            else
+            {
+                lblTranslation.Text = "Translation failed.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            lblTranslation.Text = "Translation failed.";
+            await DisplayAlert("Error", $"You need to select a language!", "OK");
         }
+        await KeyboardExtensions.HideKeyboardAsync(txtInput);
     }
 
     private async void SpeakText(object sender, EventArgs e)
@@ -85,5 +93,4 @@ public partial class TranslatorPage : ContentPage
             await TextToSpeech.Default.SpeakAsync(textToSpeak);
         }
     }
-
 }

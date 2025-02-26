@@ -100,7 +100,7 @@ public partial class MainPageOfTheProject : TabbedPage
             double convertedAmount = (amount / fromRate) * toRate;
 
             // Display the result
-            ResultLabel.Text = $"Converted Amount: {convertedAmount:F2} {toCurrency}";
+            ResultLabel.Text = $"{convertedAmount:F2} {toCurrency}";
         }
         catch (Exception ex)
         {

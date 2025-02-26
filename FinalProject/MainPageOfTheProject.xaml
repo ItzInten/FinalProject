@@ -4,45 +4,66 @@
              x:Class="FinalProject.MainPageOfTheProject"
              xmlns:local="clr-namespace:FinalProject"
              Title="MainPageOfTheProject">
-    <ContentPage Title="Exchange">
-        <ContentPage.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#A1C4FD" Offset="0.1"/>
-                <GradientStop Color="#C2E9FB" Offset="3.0"/>
-            </LinearGradientBrush>
-        </ContentPage.Background>
+    <ContentPage Title="Exchange"
+                 BackgroundColor="#EEEEEE">
         <VerticalStackLayout>
             <Label Text="Currency Converter"
                FontSize="24"
                HorizontalOptions="Center"
                VerticalOptions="Start" 
-               Margin="0,50,0,100" />
+               Margin="0,30,0,10" />
+            <Image Source="exchanger.png"
+            WidthRequest="100"
+            HeightRequest="100"
+            Aspect="AspectFit"
+            Margin="0,0,0,10"/>
             <ScrollView>
-            <Frame CornerRadius="15" 
+                <Frame CornerRadius="20" 
                     Padding="15" 
                     BackgroundColor="White"
-                    HasShadow="True"
+                    BorderColor="Transparent"
+                    HasShadow="False"
                     WidthRequest="350"
-                    HeightRequest="260">
-                <VerticalStackLayout Spacing="10">
-                    <Grid ColumnDefinitions="*, Auto, *">
-                        <Picker x:Name="FromCurrencyPicker" Title="From" WidthRequest="120"/>
-                        <Button Text="⇄" Clicked="OnSwapCurrencies" Grid.Column="1"/>
-                        <Picker x:Name="ToCurrencyPicker" Title="To" Grid.Column="2" WidthRequest="120"/>
-                    </Grid>
+                    HeightRequest="280">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*, Auto, *">
+                            <Picker x:Name="FromCurrencyPicker" Title="From" WidthRequest="120"/>
+                            <Button Text="⇄" Clicked="OnSwapCurrencies" Grid.Column="1"/>
+                            <Picker x:Name="ToCurrencyPicker" Title="To" Grid.Column="2" WidthRequest="120"/>
+                        </Grid>
 
-                    <Entry x:Name="AmountEntry"
-               Placeholder="Enter amount"
-               Keyboard="Numeric"
-               HorizontalOptions="FillAndExpand"/>
+                        <Entry x:Name="AmountEntry"
+                            Placeholder="Enter amount"
+                            Keyboard="Numeric"
+                            HorizontalOptions="FillAndExpand"/>
 
-                    <Button Text="Convert" Clicked="OnShowResultClicked"/>
+                        <Button Text="Convert" Clicked="OnShowResultClicked"/>
 
-                    <Label x:Name="ResultLabel" Text="Result: " FontSize="20" HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Frame>
+                        <BoxView HeightRequest="1"
+                        BackgroundColor="LightGray"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="0,10"/>
 
-        </ScrollView>
+                        <Frame BackgroundColor="#E0E0E0"
+                            CornerRadius="10"
+                            Padding="0"
+                            Margin="0,0,0,0"
+                            BorderColor="Transparent"
+                            HorizontalOptions="Center"
+                            WidthRequest="320"
+                            HeightRequest="50">
+                                <Label x:Name="ResultLabel"
+                                    Text="Result"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    VerticalTextAlignment="Center"/>
+                        </Frame>
+
+                    </VerticalStackLayout>
+                </Frame>
+            </ScrollView>
         </VerticalStackLayout>
     </ContentPage>
 

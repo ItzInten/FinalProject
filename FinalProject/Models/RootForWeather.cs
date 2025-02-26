@@ -14,6 +14,7 @@ namespace FinalProject.Models
         public int relative_humidity_2m { get; set; }
         public int is_day { get; set; }
         public double precipitation { get; set; }
+        public int weather_code { get; set; }
     }
 
     public class CurrentUnits
@@ -24,6 +25,7 @@ namespace FinalProject.Models
         public string relative_humidity_2m { get; set; }
         public string is_day { get; set; }
         public string precipitation { get; set; }
+        public string weather_code { get; set; }
     }
 
     public class Daily
@@ -52,6 +54,8 @@ namespace FinalProject.Models
         public List<double> temperature_2m { get; set; }
         public List<int> relative_humidity_2m { get; set; }
         public List<double> precipitation { get; set; }
+        public List<int> weather_code { get; set; }
+        public List<int> is_day { get; set; }
     }
 
     public class HourlyUnits

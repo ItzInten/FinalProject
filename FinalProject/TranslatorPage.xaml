@@ -2,21 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinalProject.TranslatorPage"
-             Title="TranslatorPage">
+             Title="TranslatorPage"
+             BackgroundColor="#EEEEEE">
     <VerticalStackLayout Padding="20" Spacing="15">
-        <Entry x:Name="txtInput" Placeholder="Enter text to translate" FontSize="18"/>
-
-        <Picker x:Name="languagePicker" Title="Select Language" FontSize="18"/>
-
-        <Button Text="Translate" Clicked="OnTranslateClicked" FontSize="18" />
-
-        <Label x:Name="lblTranslation" FontSize="20" TextColor="Blue" Text="Translation will appear here." 
-           Padding="10" BackgroundColor="LightGray" HorizontalTextAlignment="Center"/>
-
-        <Button Text="🔊 Speak"
-        Clicked="SpeakText"
-        FontSize="24"
+        <Label Text="Translate"
+        FontSize="30"
+        FontAttributes="Bold"
         HorizontalOptions="Center"
-        VerticalOptions="Center"/>
+        VerticalOptions="Start"
+        Margin="0,0,0,0"/>
+        <Label Text="Entered text is detected automatically"
+        FontSize="16"
+        HorizontalOptions="Center"
+        Margin="0,0,0,70"/>
+        <Picker x:Name="languagePicker" Title="Select the target language for translation" FontSize="18"/>
+        <Frame BackgroundColor="White"
+        BorderColor="Transparent"
+        HasShadow="False"
+        WidthRequest="350"
+        HeightRequest="150">
+        <Editor x:Name="txtInput" 
+        Placeholder="Enter text to translate" 
+        FontSize="18" 
+        HeightRequest="150"
+        AutoSize="TextChanges" />
+        </Frame>
+        <Button Text="Translate" Clicked="OnTranslateClicked" FontSize="18" />
+        <Frame BackgroundColor="White"
+        BorderColor="Transparent"
+        HasShadow="False"
+        WidthRequest="350"
+        HeightRequest="150">
+            <Label x:Name="lblTranslation" 
+                   FontSize="20" 
+                   TextColor="Blue" 
+                   Text="Translation will appear here." 
+                   Padding="10" 
+                   HorizontalTextAlignment="Center" 
+                   VerticalTextAlignment="Start" 
+                   LineBreakMode="WordWrap" 
+                   HeightRequest="150" 
+                   MaxLines="5" />
+
+        </Frame>
+        <Button Text="🔊 Speak"
+                Clicked="SpeakText"
+                FontSize="24"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
