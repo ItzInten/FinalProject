@@ -10,12 +10,14 @@
         FontAttributes="Bold"
         HorizontalOptions="Center"
         VerticalOptions="Start"
-        Margin="0,0,0,0"/>
+        Margin="0,0,0,0"
+        Style="{StaticResource ThemedLabelStyle}"/>
         <Label Text="Entered text is detected automatically"
         FontSize="16"
         HorizontalOptions="Center"
-        Margin="0,0,0,70"/>
-        <Picker x:Name="languagePicker" Title="Select the target language for translation" FontSize="18"/>
+        Margin="0,0,0,70"
+        Style="{StaticResource ThemedLabelStyle}"/>
+        <Picker x:Name="languagePicker" Title="Select the target language for translation" FontSize="18" TextColor="Black"/>
         <Frame BackgroundColor="White"
         BorderColor="Transparent"
         HasShadow="False"
@@ -25,7 +27,8 @@
         Placeholder="Enter text to translate" 
         FontSize="18" 
         HeightRequest="150"
-        AutoSize="TextChanges" />
+        AutoSize="TextChanges" 
+        TextColor ="Black"/>
         </Frame>
         <Button Text="Translate" Clicked="OnTranslateClicked" FontSize="18" />
         <Frame BackgroundColor="White"

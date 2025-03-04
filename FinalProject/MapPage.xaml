@@ -10,7 +10,7 @@
                Placeholder="Enter location..."
                SearchCommand="{Binding SearchCommand}"
                SearchCommandParameter="{Binding Text, Source={x:Reference SearchBarLocation}}"
-               BackgroundColor="White"
+               BackgroundColor="Transparent"
                Margin="10"
                Grid.Row="0"/>
 

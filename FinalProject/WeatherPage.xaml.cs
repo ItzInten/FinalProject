@@ -55,50 +55,57 @@ namespace FinalProject
         }
         protected override async void OnAppearing()
         {
-            int currentIndex = 0;
-            DateTime currentTime = DateTime.Now;
-            int adjustedMinutes;
-            if (currentTime.Minute >= 30)
+            try
             {
-                adjustedMinutes = 60 - currentTime.Minute;
-            }
-            else
-            {
-                adjustedMinutes = -currentTime.Minute;
-            }
-            DateTime roundedTime = currentTime.AddMinutes(adjustedMinutes);
-            string formattedDate = roundedTime.ToString("yyyy-MM-ddTHH:mm");
-            //DateTime finalDate = formattedDate;
-            base.OnAppearing();
-            await GetLocation();
-            var result = await WeatherAPIService.GetWeather(latitude, longitude);
-            string getIconUrl = getWeatherIcon(result.current.weather_code, result.current.is_day);
-            WeatherIcon.Source = getIconUrl;
-            var cityName = await WeatherAPIService.GetCityDetails(Math.Round(latitude, 4),Math.Round(longitude, 4));
-            CityNameLabel.Text = cityName.features[0].properties.city;
-            TemperatureLabel.Text = result.current.temperature_2m.ToString()+result.current_units.temperature_2m;
-            HumidityLabel.Text = result.current.relative_humidity_2m.ToString()+result.current_units.relative_humidity_2m;
-            PrecipitationLabel.Text = result.current.precipitation.ToString()+"mm";
-            List<HourlyWeatherData> WeatherDataCombined = new List<HourlyWeatherData>();
-
-            for (int i = 0; i < result.hourly.time.Count; i++)
-            {
-                if (formattedDate.ToString() == result.hourly.time[i])
+                int currentIndex = 0;
+                DateTime currentTime = DateTime.Now;
+                int adjustedMinutes;
+                if (currentTime.Minute >= 30)
                 {
-                    currentIndex = i;
+                    adjustedMinutes = 60 - currentTime.Minute;
                 }
-                WeatherDataCombined.Add(new HourlyWeatherData
+                else
                 {
-                    Time = result.hourly.time[i],
-                    Temperature = result.hourly.temperature_2m[i],
-                    Humidity = result.hourly.relative_humidity_2m[i],
-                    Precipitation = result.hourly.precipitation[i],
-                    WeatherImage = getWeatherIcon(result.hourly.weather_code[i], result.hourly.is_day[i])
-                });
-            }
-            HourlyCollectionView.ItemsSource = WeatherDataCombined;
-            HourlyCollectionView.ScrollTo(currentIndex, position: ScrollToPosition.Center, animate: false);
+                    adjustedMinutes = -currentTime.Minute;
+                }
+                DateTime roundedTime = currentTime.AddMinutes(adjustedMinutes);
+                string formattedDate = roundedTime.ToString("yyyy-MM-ddTHH:mm");
+                //DateTime finalDate = formattedDate;
+                base.OnAppearing();
+                await GetLocation();
+                var result = await WeatherAPIService.GetWeather(latitude, longitude);
+                string getIconUrl = getWeatherIcon(result.current.weather_code, result.current.is_day);
+                WeatherIcon.Source = getIconUrl;
+                var cityName = await WeatherAPIService.GetCityDetails(Math.Round(latitude, 4), Math.Round(longitude, 4));
+                CityNameLabel.Text = cityName.features[0].properties.city;
+                TemperatureLabel.Text = result.current.temperature_2m.ToString() + result.current_units.temperature_2m;
+                HumidityLabel.Text = result.current.relative_humidity_2m.ToString() + result.current_units.relative_humidity_2m;
+                PrecipitationLabel.Text = result.current.precipitation.ToString() + "mm";
+                List<HourlyWeatherData> WeatherDataCombined = new List<HourlyWeatherData>();
 
+                for (int i = 0; i < result.hourly.time.Count; i++)
+                {
+                    if (formattedDate.ToString() == result.hourly.time[i])
+                    {
+                        currentIndex = i;
+                    }
+                    WeatherDataCombined.Add(new HourlyWeatherData
+                    {
+                        Time = result.hourly.time[i],
+                        Temperature = result.hourly.temperature_2m[i],
+                        Humidity = result.hourly.relative_humidity_2m[i],
+                        Precipitation = result.hourly.precipitation[i],
+                        WeatherImage = getWeatherIcon(result.hourly.weather_code[i], result.hourly.is_day[i])
+                    });
+                }
+                HourlyCollectionView.ItemsSource = WeatherDataCombined;
+                HourlyCollectionView.ScrollTo(currentIndex, position: ScrollToPosition.Center, animate: false);
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+            }
         }
     }
 

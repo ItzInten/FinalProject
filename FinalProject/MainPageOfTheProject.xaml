@@ -11,7 +11,8 @@
                FontSize="24"
                HorizontalOptions="Center"
                VerticalOptions="Start" 
-               Margin="0,30,0,10" />
+               Margin="0,30,0,10" 
+               Style="{StaticResource ThemedLabelStyle}"/>
             <Image Source="exchanger.png"
             WidthRequest="100"
             HeightRequest="100"
@@ -27,15 +28,17 @@
                     HeightRequest="280">
                     <VerticalStackLayout Spacing="10">
                         <Grid ColumnDefinitions="*, Auto, *">
-                            <Picker x:Name="FromCurrencyPicker" Title="From" WidthRequest="120"/>
+                            <Picker x:Name="FromCurrencyPicker" Title="From" WidthRequest="120" TitleColor="Gray" TextColor="Black" BackgroundColor="Transparent"/>
                             <Button Text="⇄" Clicked="OnSwapCurrencies" Grid.Column="1"/>
-                            <Picker x:Name="ToCurrencyPicker" Title="To" Grid.Column="2" WidthRequest="120"/>
+                            <Picker x:Name="ToCurrencyPicker" Title="To" Grid.Column="2" WidthRequest="120" TitleColor="Gray" TextColor="Black" BackgroundColor="Transparent"/>
                         </Grid>
 
                         <Entry x:Name="AmountEntry"
                             Placeholder="Enter amount"
                             Keyboard="Numeric"
-                            HorizontalOptions="FillAndExpand"/>
+                            HorizontalOptions="FillAndExpand"
+                            PlaceholderColor="Gray" TextColor="Black"
+                            BackgroundColor="Transparent"/>
 
                         <Button Text="Convert" Clicked="OnShowResultClicked"/>
 

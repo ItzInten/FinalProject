@@ -27,26 +27,33 @@ public partial class MapPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        var location = await Geolocation.GetLastKnownLocationAsync();
-        if (location == null)
+        try
         {
-            location = await Geolocation.GetLocationAsync();
-        }
-        if (location != null)
-        {
-            MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
-            MyMap.MoveToRegion(mapSpan);
+            var location = await Geolocation.GetLastKnownLocationAsync();
+            if (location == null)
+            {
+                location = await Geolocation.GetLocationAsync();
+            }
+            if (location != null)
+            {
+                MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
+                MyMap.MoveToRegion(mapSpan);
 
+            }
+            var pin = new Pin
+            {
+                Label = "My Location",
+                Address = $"Lat: {location.Latitude}, Lng: {location.Longitude}",
+                Location = location,
+                Type = PinType.Place
+            };
+            MyMap.Pins.Add(pin);
+            MyMap.MapClicked += OnMapClicked;
         }
-        var pin = new Pin
+        catch (Exception ex)
         {
-            Label = "My Location",
-            Address = $"Lat: {location.Latitude}, Lng: {location.Longitude}",
-            Location = location,
-            Type = PinType.Place
-        };
-        MyMap.Pins.Add(pin);
-        MyMap.MapClicked += OnMapClicked;
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
     }
 
     private void OnMapClicked(object sender, MapClickedEventArgs e)

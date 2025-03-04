@@ -80,7 +80,7 @@ public partial class TranslatorPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"You need to select a language!", "OK");
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
         await KeyboardExtensions.HideKeyboardAsync(txtInput);
     }

@@ -9,6 +9,25 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ThemedLabelStyle" TargetType="Label">
+                <Setter Property="TextColor">
+                    <Setter.Value>
+                        <AppThemeBinding Light="Black" Dark="Black"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ThemedPickerStyle" TargetType="Picker">
+                <Setter Property="TextColor">
+                    <Setter.Value>
+                        <AppThemeBinding Light="Black" Dark="White"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="TitleColor">
+                    <Setter.Value>
+                        <AppThemeBinding Light="Black" Dark="Black"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

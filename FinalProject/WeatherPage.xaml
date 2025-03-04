@@ -16,25 +16,28 @@
                FontAttributes="Bold"
                HorizontalOptions="Center"
                VerticalOptions="Start"
-               Grid.Row="0"/>
+               Grid.Row="0"
+               Style="{StaticResource ThemedLabelStyle}"/>
 
         <StackLayout Grid.Row="1" Padding="40" Spacing="5">
             <Label x:Name="TemperatureLabel"
                    Text="--°C"
                    FontSize="50"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   Style="{StaticResource ThemedLabelStyle}"/>
             <Label x:Name="WeatherDescriptionLabel"
                    Text="Weather Description"
                    FontSize="20"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   Style="{StaticResource ThemedLabelStyle}"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Text="Humidity: " FontSize="16"/>
-                <Label x:Name="HumidityLabel" Text="--%" FontSize="16"/>
+                <Label Text="Humidity: " FontSize="16" Style="{StaticResource ThemedLabelStyle}"/>
+                <Label x:Name="HumidityLabel" Text="--%" FontSize="16" Style="{StaticResource ThemedLabelStyle}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Text="Precipitation: " FontSize="16"/>
-                <Label x:Name="PrecipitationLabel" Text="--mm" FontSize="16"/>
+                <Label Text="Precipitation: " FontSize="16" Style="{StaticResource ThemedLabelStyle}"/>
+                <Label x:Name="PrecipitationLabel" Text="--mm" FontSize="16" Style="{StaticResource ThemedLabelStyle}"/>
             </StackLayout>
             <Image x:Name="WeatherIcon" WidthRequest="100" HeightRequest="100" Aspect="AspectFit" Margin="0,0,0,20"/>
             <BoxView HeightRequest="1"
