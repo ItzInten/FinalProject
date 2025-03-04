@@ -3,8 +3,160 @@ namespace FinalProject;
 
 public partial class MainPageOfTheProject : TabbedPage
 {
+    private double latitude;
+    private double longitude;
     private Dictionary<string, double> CurrencyRates = new Dictionary<string, double>();
-    
+    private List<KeyValuePair<string, double>> ratesList = new List<KeyValuePair<string, double>>();
+    private Dictionary<string, string> countryCodeToCurrencyMap = new Dictionary<string, string>
+    {
+        // Countries using AUD (Australian Dollar)
+        { "AU", "AUD" },  // Australia
+
+        // Countries using BGN (Bulgarian Lev)
+        { "BG", "BGN" },  // Bulgaria
+
+        // Countries using BRL (Brazilian Real)
+        { "BR", "BRL" },  // Brazil
+
+        // Countries using CAD (Canadian Dollar)
+        { "CA", "CAD" },  // Canada
+
+        // Countries using CHF (Swiss Franc)
+        { "CH", "CHF" },  // Switzerland
+
+        // Countries using CNY (Chinese Yuan)
+        { "CN", "CNY" },  // China
+
+        // Countries using CZK (Czech Koruna)
+        { "CZ", "CZK" },  // Czech Republic
+
+        // Countries using DKK (Danish Krone)
+        { "DK", "DKK" },  // Denmark
+
+        // Countries using EUR (Euro)
+        { "DE", "EUR" },  // Germany
+        { "FR", "EUR" },  // France
+        { "IT", "EUR" },  // Italy
+        { "ES", "EUR" },  // Spain
+        { "NL", "EUR" },  // Netherlands
+        { "GR", "EUR" },  // Greece
+        { "PT", "EUR" },  // Portugal
+        { "IE", "EUR" },  // Ireland
+        { "BE", "EUR" },  // Belgium
+        { "FI", "EUR" },  // Finland
+        { "AT", "EUR" },  // Austria
+        { "LU", "EUR" },  // Luxembourg
+        { "MT", "EUR" },  // Malta
+        { "CY", "EUR" },  // Cyprus
+        { "SI", "EUR" },  // Slovenia
+        { "SK", "EUR" },  // Slovakia
+        { "EE", "EUR" },  // Estonia
+        { "LV", "EUR" },  // Latvia
+        { "LT", "EUR" },  // Lithuania
+        // More countries that use EUR can be added here
+
+        // Countries using GBP (British Pound Sterling)
+        { "GB", "GBP" },  // United Kingdom
+
+        // Countries using HKD (Hong Kong Dollar)
+        { "HK", "HKD" },  // Hong Kong
+
+        // Countries using HRK (Croatian Kuna)
+        { "HR", "HRK" },  // Croatia
+
+        // Countries using HUF (Hungarian Forint)
+        { "HU", "HUF" },  // Hungary
+
+        // Countries using IDR (Indonesian Rupiah)
+        { "ID", "IDR" },  // Indonesia
+
+        // Countries using INR (Indian Rupee)
+        { "IN", "INR" },  // India
+
+        // Countries using JPY (Japanese Yen)
+        { "JP", "JPY" },  // Japan
+
+        // Countries using KRW (South Korean Won)
+        { "KR", "KRW" },  // South Korea
+
+        // Countries using MXN (Mexican Peso)
+        { "MX", "MXN" },  // Mexico
+
+        // Countries using NOK (Norwegian Krone)
+        { "NO", "NOK" },  // Norway
+
+        // Countries using NZD (New Zealand Dollar)
+        { "NZ", "NZD" },  // New Zealand
+
+        // Countries using PLN (Polish Zloty)
+        { "PL", "PLN" },  // Poland
+
+        // Countries using RON (Romanian Leu)
+        { "RO", "RON" },  // Romania
+
+        // Countries using RUB (Russian Ruble)
+        { "RU", "RUB" },  // Russia
+
+        // Countries using SEK (Swedish Krona)
+        { "SE", "SEK" },  // Sweden
+
+        // Countries using SGD (Singapore Dollar)
+        { "SG", "SGD" },  // Singapore
+
+        // Countries using THB (Thai Baht)
+        { "TH", "THB" },  // Thailand
+
+        // Countries using TRY (Turkish Lira)
+        { "TR", "TRY" },  // Turkey
+
+        // Countries using USD (United States Dollar)
+        { "US", "USD" },  // United States
+        { "PR", "USD" },  // Puerto Rico (territory of the United States)
+        { "FM", "USD" },  // Federated States of Micronesia
+
+        // Countries using ZAR (South African Rand)
+        { "ZA", "ZAR" },  // South Africa
+    };
+
+    public async Task GetLocation()
+    {
+        var location = await Geolocation.GetLocationAsync();
+        latitude = location.Latitude;
+        longitude = location.Longitude;
+    }
+    private async Task UpdateToCurrencyPicker()
+    {
+        try
+        {
+            await GetLocation();
+            ToCurrencyPicker.ItemsSource = ratesList.Select(item => item.Key).ToList();  // Populate the currency picker with the list of currencies
+            var countryName = await WeatherAPIService.GetCityDetails(Math.Round(latitude, 4), Math.Round(longitude, 4));
+            string countryCode = countryName.features[0].properties.country_code;
+
+            // Find the corresponding currency code from the countryCodeToCurrencyMap using the country code
+            var currencyCode = countryCodeToCurrencyMap
+                                .Where(x => x.Key.Equals(countryCode, StringComparison.OrdinalIgnoreCase))  // Match country code
+                                .Select(x => x.Value)  // Get the currency code
+                                .FirstOrDefault();  // Use FirstOrDefault to get the first matching currency code
+
+            if (!string.IsNullOrEmpty(currencyCode))  // If a currency code is found
+            {
+                // Select the currency in the picker
+                var selectedCurrency = ratesList.FirstOrDefault(x => x.Key.Equals(currencyCode, StringComparison.OrdinalIgnoreCase)).Key;
+
+                if (selectedCurrency != null)
+                {
+                    ToCurrencyPicker.SelectedItem = selectedCurrency;  // Set the selected item in the currency picker
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", "No currency rates available.", "OK");
+        }
+    }
     public MainPageOfTheProject()
     {
         InitializeComponent();
@@ -21,7 +173,7 @@ public partial class MainPageOfTheProject : TabbedPage
             if (result?.data != null)
             {
                 // Convert dictionary to a list of key-value pairs
-                var ratesList = new List<KeyValuePair<string, double>>
+                ratesList = new List<KeyValuePair<string, double>>
                 {
                 new KeyValuePair<string, double>("AUD", result.data.AUD),
                 new KeyValuePair<string, double>("BGN", result.data.BGN),
@@ -59,6 +211,7 @@ public partial class MainPageOfTheProject : TabbedPage
                 FromCurrencyPicker.ItemsSource = ratesList.Select(item => item.Key).ToList();
                 ToCurrencyPicker.ItemsSource = ratesList.Select(item => item.Key).ToList();
                 CurrencyRates = ratesList.ToDictionary(r => r.Key, r => r.Value);
+                await UpdateToCurrencyPicker();
             }
             else
             {
