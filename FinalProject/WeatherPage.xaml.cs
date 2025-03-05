@@ -53,7 +53,53 @@ namespace FinalProject
 
             return "https://openweathermap.org/img/wn/01d@2x.png";
         }
-        protected override async void OnAppearing()
+
+        public async Task weatherByLocation()
+        {
+            int currentIndex = 0;
+            DateTime currentTime = DateTime.Now;
+            int adjustedMinutes;
+            if (currentTime.Minute >= 30)
+            {
+                adjustedMinutes = 60 - currentTime.Minute;
+            }
+            else
+            {
+                adjustedMinutes = -currentTime.Minute;
+            }
+            DateTime roundedTime = currentTime.AddMinutes(adjustedMinutes);
+            string formattedDate = roundedTime.ToString("yyyy-MM-ddTHH:mm");
+            await GetLocation();
+            var result = await WeatherAPIService.GetWeather(latitude, longitude);
+            string getIconUrl = getWeatherIcon(result.current.weather_code, result.current.is_day);
+            WeatherIcon.Source = getIconUrl;
+            var cityName = await WeatherAPIService.GetCityDetails(Math.Round(latitude, 4), Math.Round(longitude, 4));
+            CityNameLabel.Text = cityName.features[0].properties.city;
+            TemperatureLabel.Text = result.current.temperature_2m.ToString() + result.current_units.temperature_2m;
+            HumidityLabel.Text = result.current.relative_humidity_2m.ToString() + result.current_units.relative_humidity_2m;
+            PrecipitationLabel.Text = result.current.precipitation.ToString() + "mm";
+            List<HourlyWeatherData> WeatherDataCombined = new List<HourlyWeatherData>();
+
+            for (int i = 0; i < result.hourly.time.Count; i++)
+            {
+                if (formattedDate.ToString() == result.hourly.time[i])
+                {
+                    currentIndex = i;
+                }
+                WeatherDataCombined.Add(new HourlyWeatherData
+                {
+                    Time = result.hourly.time[i],
+                    Temperature = result.hourly.temperature_2m[i],
+                    Humidity = result.hourly.relative_humidity_2m[i],
+                    Precipitation = result.hourly.precipitation[i],
+                    WeatherImage = getWeatherIcon(result.hourly.weather_code[i], result.hourly.is_day[i])
+                });
+            }
+            HourlyCollectionView.ItemsSource = WeatherDataCombined;
+            HourlyCollectionView.ScrollTo(currentIndex, position: ScrollToPosition.Center, animate: false);
+        }
+
+        public async Task weatherByCity(string city)
         {
             try
             {
@@ -70,13 +116,11 @@ namespace FinalProject
                 }
                 DateTime roundedTime = currentTime.AddMinutes(adjustedMinutes);
                 string formattedDate = roundedTime.ToString("yyyy-MM-ddTHH:mm");
-                //DateTime finalDate = formattedDate;
-                base.OnAppearing();
-                await GetLocation();
-                var result = await WeatherAPIService.GetWeather(latitude, longitude);
+                var cityDetails = await WeatherAPIService.GetCityLocation(city.Trim());
+                var result = await WeatherAPIService.GetWeather(cityDetails.results[0].latitude, cityDetails.results[0].longitude);
                 string getIconUrl = getWeatherIcon(result.current.weather_code, result.current.is_day);
                 WeatherIcon.Source = getIconUrl;
-                var cityName = await WeatherAPIService.GetCityDetails(Math.Round(latitude, 4), Math.Round(longitude, 4));
+                var cityName = await WeatherAPIService.GetCityDetails(Math.Round(cityDetails.results[0].latitude, 4), Math.Round(cityDetails.results[0].longitude, 4));
                 CityNameLabel.Text = cityName.features[0].properties.city;
                 TemperatureLabel.Text = result.current.temperature_2m.ToString() + result.current_units.temperature_2m;
                 HumidityLabel.Text = result.current.relative_humidity_2m.ToString() + result.current_units.relative_humidity_2m;
@@ -100,11 +144,34 @@ namespace FinalProject
                 }
                 HourlyCollectionView.ItemsSource = WeatherDataCombined;
                 HourlyCollectionView.ScrollTo(currentIndex, position: ScrollToPosition.Center, animate: false);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"No such city found!", "OK");
+            }
+        }
+        protected override async void OnAppearing()
+        {
+            try
+            {
+                base.OnAppearing();
+                await GetLocation();
+                var result = await WeatherAPIService.GetWeather(latitude, longitude);
+                await weatherByLocation();
 
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+            }
+        }
+
+        private async void searchButtonClicked(object sender, EventArgs e)
+        {
+            var response = await DisplayPromptAsync(title: "Search", message: "", placeholder: "Enter different location", accept: "Search", cancel: "Cancel");
+            if (response != null)
+            {
+                await weatherByCity(response);
             }
         }
     }

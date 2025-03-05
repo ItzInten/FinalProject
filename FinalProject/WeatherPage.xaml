@@ -17,8 +17,11 @@
                HorizontalOptions="Center"
                VerticalOptions="Start"
                Grid.Row="0"
-               Style="{StaticResource ThemedLabelStyle}"/>
-
+               Style="{StaticResource ThemedLabelStyle}"
+               Margin="0,0,0,0"/>
+        <ImageButton Source="searchicon.png"
+                     Margin="0,0,300,0"
+                     Clicked="searchButtonClicked"/>
         <StackLayout Grid.Row="1" Padding="40" Spacing="5">
             <Label x:Name="TemperatureLabel"
                    Text="--°C"

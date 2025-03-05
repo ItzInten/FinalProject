@@ -20,12 +20,12 @@ namespace FinalProject.Services
             var reply = await httpClient.GetStringAsync(API1_URL);
             return JsonConvert.DeserializeObject<RootForWeather>(reply);
         }
-        public static async Task<RootForWeather> GetCityDetails(string city)
+        public static async Task<RootForCityLocation> GetCityLocation(string city)
         {
             API2_URL = $"https://geocoding-api.open-meteo.com/v1/search?name={Uri.EscapeDataString(city)}&count=1&language=en&format=json";
             var httpClient = new HttpClient();
             var reply = await httpClient.GetStringAsync(API2_URL);
-            return JsonConvert.DeserializeObject<RootForWeather>(reply);
+            return JsonConvert.DeserializeObject<RootForCityLocation>(reply);
         }
 
         public static async Task<RootForReverseGeocoding> GetCityDetails(double Latitude, double Longitude)
