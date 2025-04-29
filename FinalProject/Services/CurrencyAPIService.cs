@@ -11,7 +11,7 @@ namespace FinalProject.Services
 {
     public class CurrencyAPIService
     {
-        private const string API_URL = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_Og20jgdlfUHvCEQiyKPcJbEXi7xEycEQu7kBHzaJ";
+        private const string API_URL = "https://api.freecurrencyapi.com/v1/latest?apikey=APIKEY";
         public static async Task <Root> GetCoefficient()
         {
             var httpClient = new HttpClient();

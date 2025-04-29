@@ -30,7 +30,7 @@ namespace FinalProject.Services
 
         public static async Task<RootForReverseGeocoding> GetCityDetails(double Latitude, double Longitude)
         {
-            API3_URL = $"https://api.geoapify.com/v1/geocode/reverse?lat={Latitude}&lon={Longitude}&apiKey=3178ac2a76364e2a860adafae6fcbe29";
+            API3_URL = $"https://api.geoapify.com/v1/geocode/reverse?lat={Latitude}&lon={Longitude}&apiKey=APIKEY";
             var httpClient = new HttpClient();
             var reply = await httpClient.GetStringAsync(API3_URL);
             return JsonConvert.DeserializeObject<RootForReverseGeocoding>(reply);

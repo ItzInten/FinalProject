@@ -10,7 +10,7 @@ namespace FinalProject.Services
     public class TranslatorAPIService
     {
         private const string ApiUrl = "https://api-free.deepl.com/v2/translate";
-        private const string ApiKey = "f5e58ea5-167a-4748-bca8-680af00d590b:fx";
+        private const string ApiKey = "APIKEY";
         public static async Task<string> TranslateTextAsync(string text, string targetLanguage)
         {
             if (string.IsNullOrWhiteSpace(text)) return "Enter text to translate.";
